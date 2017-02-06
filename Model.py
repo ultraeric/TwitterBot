@@ -1,10 +1,13 @@
 import tensorflow as tf
+import os
 import tflearn as tfl
 import configparser
 import pickle
 
-base = os.path.dirname(__file__)
+base = os.path.dirname(os.path.abspath(__file__))
 
+config = configparser.ConfigParser()
+config.read(base + '/config/conf.cf')
 
 def model_param(key):
 	return int(float(config['MODEL INFO'][key]))
@@ -37,9 +40,7 @@ def build_model(gpu = True, gpu_num = 0):
 def _build_model():
 	"""Convenience method builds and returns the model when called"""
 
-	config = configparser.ConfigParser()
-	config.read(base + '/../config/conf.cf')
-	vocab = pickle.load(open(base + '/.' + config['FILE LOCS']['vocab_dir'] + '/vocab.data', 'rb'))	
+	vocab = pickle.load(open(base + '/' + config['FILE LOCS']['vocab_dir'] + '/vocab.data', 'rb'))	
 	vocab_size = len(vocab[0]) + 5
 
 	#PARAMETERS
@@ -68,7 +69,7 @@ def _build_model():
 	#CELL
 	#Build the GRU object. This creates the parameters, computation
 	#graph will be created it later.
-	gru_cell = tf.nn.rnn_cell.GRUCell(model_param('state_size')))
+	gru_cell = tf.nn.rnn_cell.GRUCell(model_param('state_size'))
 	gru_cell = tf.nn.rnn_cell.DropoutWrapper(gru_cell, output_keep_prob = float(config['MODEL INFO']['dropout_keep_prob']))
 	gru_cell = tf.nn.rnn_cell.MultiRNNCell([gru_cell] * model_param('gru_depth'))
 

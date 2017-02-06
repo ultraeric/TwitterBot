@@ -6,6 +6,7 @@ import sys
 base = os.path.dirname(__file__)
 import configparser
 from utils import string_utils as suts
+from utils import parse_utils as puts
 
 config = configparser.ConfigParser()
 config.read(base + '/../config/conf.cf')
@@ -29,19 +30,16 @@ def process():
 	for filename in os.listdir(clean_dataset_dir):
 		if not filename.endswith('.txt'):
 			continue
+		print(filename)
 		read_file = open(clean_dataset_dir + '/' + filename, 'r')
 		line = read_file.readline()
-		line_num = 0
 		while line:
 			line = line.encode().decode()
 			line.replace('\\n', '')
 			chars = suts.parse_string_to_chars(line, lower = False)
-			char_inds = [vocab[key] if key in vocab else unk_token for key in range(len(chars))]
+			char_inds = puts.encode_tokens(chars, vocab)
 			write_file.write(json.dumps(char_inds) + '\n')
 			line = read_file.readline()
-			if line_num % 5000 == 0:
-				print('Processing line ' + str(line_num))
-			line_num += 1
 		read_file.close()
 	write_file.close()
 

@@ -3,17 +3,18 @@ import tflearn as tfl
 import Model
 import configparser
 import os
-import Dataset
+import datasets.Batch_Maker
 
-base = os.path.dirname(__file__)
+base = os.path.dirname(os.path.abspath(__file__))
 start_batch = 0
 
 #Parse configuration files
 config = configparser.ConfigParser()
+print(base)
 config.read(base + '/config/conf.cf')
 
-load_model = base + '/' + config['FILES']['model_load']
-#load_model = None
+load_model = base + '/' + config['FILE LOCS']['model_load']
+load_model = None
 
 #Builds and retrieves model on a GPU
 model = Model.build_model(gpu = True, gpu_num = 1)
@@ -24,14 +25,14 @@ for key in model:
 
 #Dynamic on-GPU and off-GPU computing (for GPU-incompatible things)
 saver = tf.train.Saver()
-config = tf.ConfigProto(allow_soft_placement = True)
-config.gpu_options.allocator_type = 'BFC'
-config.gpu_options.allow_growth = True
+configp = tf.ConfigProto(allow_soft_placement = True)
+configp.gpu_options.allocator_type = 'BFC'
+configp.gpu_options.allow_growth = True
 
 tf.logging.set_verbosity(tf.logging.FATAL)
 
 #Train loop
-with tf.Session(config = config) as sess:
+with tf.Session(config = configp) as sess:
 	#Initializes global variables
 	sess.run(tf.global_variables_initializer())
 
@@ -50,7 +51,7 @@ with tf.Session(config = config) as sess:
 				model[key] = item[0]
 
 	#Gets the batch generator function
-	batch_func = Dataset.get_batch_func(filename, gpu = True, gpu_num = 1)
+	batch_func = datasets.Batch_Maker.get_batch_func(gpu = True, gpu_num = 1)
 	batch = batch_func()
 	batch_num = 0
 	

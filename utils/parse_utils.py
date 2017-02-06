@@ -9,6 +9,25 @@ import configparser
 import string_utils
 
 config = configparser.ConfigParser()
+config.read(base + '/../config/conf.cf')
+
+def get_token(key):
+	return int(float(config['VOCAB INFO'][key]))
+
+zero_mask = get_token('zero_mask')
+unk_token = get_token('unk_token')
+start_token = get_token('start_token')
+end_token = get_token('end_token')
+div_token = get_token('div_token')
+special_dict = {zero_mask: '<Z>', unk_token: '<UNK>', start_token: '<S>', end_token: '</S>', div_token: '<||>'}
+
+#Interprets vocabulary given a list of IDs and a vocab
+def interp_vocab_from_tokens(tokens, interp):
+	return [interp[token] if token in interp else special_dict[token] for token in tokens]
+
+#Encodes tokens given a vocabulary
+def encode_tokens(tokens, vocab):
+	return [vocab[token] if token in vocab else unk_token for token in tokens]
 
 #Adds vocabulary to the vocab_to_add_to given a list of tokens.
 def add_vocab_from_tokens(tokens, vocab_to_add_to):
@@ -59,7 +78,7 @@ def parse_vocab(filepaths, write_filepaths, json_to_string_accessors, tokenize =
 	for filepath in filepaths:
 		read_file = open(filepath, 'r')
 		line = read_file.readline()
-		linenum = 0
+		print(read_file)
 		while line:
 			json_obj = json.loads(line)
 			for i in range(len(write_filepaths)):
@@ -67,9 +86,6 @@ def parse_vocab(filepaths, write_filepaths, json_to_string_accessors, tokenize =
 				string = accessor(json_obj)
 				add_vocab_from_string(string, vocabs[i], tokenize[i], char[i], include_special[i], lower[i])
 			line = read_file.readline()
-			if linenum % 5000 == 0:
-				print('Processing vocab line ' + str(linenum))
-			linenum += 1
 	
 	for i in range(len(write_filepaths)):
 		vocab, interps = process_vocab(vocabs[i], min_cutoffs[i])

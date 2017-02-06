@@ -12,10 +12,15 @@ config.read(base + '/../config/conf.cf')
 
 def clean():
 	dirty_dir = base + '/.' + config['FILE LOCS']['dirty_dataset_dir']
+	file_num = 0 
+	print(dirty_dir)
 	for filename in os.listdir(dirty_dir):
-		zip_file = gzip.open(dirty_dir + '/' + filename)
+		if not filename.endswith('.gz'):
+			continue
+		zip_file = gzip.open(dirty_dir + '/' + filename, 'rt')
 		line = zip_file.readline()
-		new_file = open(base + '/.' + config['FILE LOCS']['clean_dataset_dir'] + '/cleaned.txt', 'w+')
+
+		new_file = open(base + '/.' + config['FILE LOCS']['clean_dataset_dir'] + '/cleaned' + str(file_num) + '.txt', 'w+')
 		print(filename)
 
 		while line:
@@ -29,4 +34,5 @@ def clean():
 			dic = {"text": text}
 			new_file.write(json.dumps(dic) + '\n')
 			line = zip_file.readline()
+		file_num += 1
 		new_file.close()			

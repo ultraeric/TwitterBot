@@ -6,20 +6,18 @@ import configparser
 import gzip
 import shutil
 
-base = os.path.dirname(__file__)
 
 #Set up constants
 
 config = configparser.ConfigParser()
-config.read(base + '/../config/api_auth.cf')
+config.read('./config/api_auth.cf')
 consumer_key = config['AUTH']['consumer_key']
 consumer_secret = config['AUTH']['consumer_secret']
 access_token_key = config['AUTH']['access_token_key']
 access_token_secret = config['AUTH']['access_token_secret']
 
-config.read(base + '/../config/conf.cf')
-write_file_name = config['FILES']['write_file']
-
+config.read('./config/conf.cf')
+write_file_name = config['FILE LOCS']['dirty_dataset_dir'] + '/dirty' 
 #Get auth tokens, etc., initialize Twitter API connections
 api = TwitterAPI(consumer_key, consumer_secret, access_token_key, access_token_secret)
 
@@ -28,7 +26,7 @@ req = api.request('statuses/sample', {})
 
 #Function to scrape, used to help restart scrapinging in case of error
 time_start = time.time()
-num_file = int(float(config['FILES']['start_num']))
+num_file = int(float(config['DATA INFO']['start_num']))
 def scrape_stuff():
 	counter = 0
 	time_file = time.time()
