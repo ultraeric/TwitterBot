@@ -34,7 +34,8 @@ def process():
 		read_file = open(clean_dataset_dir + '/' + filename, 'r')
 		line = read_file.readline()
 		while line:
-			line = line.encode().decode()
+			json_obj = json.loads(line)
+			line = json_obj['text'].encode().decode()
 			line.replace('\\n', '')
 			chars = suts.parse_string_to_chars(line, lower = False)
 			char_inds = puts.encode_tokens(chars, vocab)

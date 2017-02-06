@@ -1,4 +1,5 @@
 import os
+import re
 base = os.path.dirname(__file__)
 
 def pad_token_arrays(token_arrays, max_len, pad_token, pad_front = True):
@@ -28,7 +29,7 @@ def _parse_string_to_words(string, lower = True, include_special = True):
 		string = string.lower()
 	if include_special:
 		separate_special = re.sub(r'(\W)+', r' \1 ', string)
-		return re.split(r'[s]+', separate_special)
+		return re.split(r'[\s]+', separate_special)
 	else:
 		return re.split(r'[\W]+', string)
 

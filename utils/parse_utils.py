@@ -9,7 +9,7 @@ import configparser
 import string_utils
 
 config = configparser.ConfigParser()
-config.read(base + '/../config/conf.cf')
+config.read(base + '/../Config.cf')
 
 def get_token(key):
 	return int(float(config['VOCAB INFO'][key]))
@@ -79,14 +79,20 @@ def parse_vocab(filepaths, write_filepaths, json_to_string_accessors, tokenize =
 		read_file = open(filepath, 'r')
 		line = read_file.readline()
 		print(read_file)
+		line_num = 0
 		while line:
 			json_obj = json.loads(line)
+			#Note: accessor should return None if something fails.
 			for i in range(len(write_filepaths)):
 				accessor = json_to_string_accessors[i]
 				string = accessor(json_obj)
+				if string == None:
+					continue
 				add_vocab_from_string(string, vocabs[i], tokenize[i], char[i], include_special[i], lower[i])
 			line = read_file.readline()
-	
+			if line_num % 10000 == 0:
+				print(line_num)
+			line_num += 1
 	for i in range(len(write_filepaths)):
 		vocab, interps = process_vocab(vocabs[i], min_cutoffs[i])
 		with open(write_filepaths[i], 'wb+') as f:
