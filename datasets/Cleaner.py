@@ -24,7 +24,14 @@ def clean():
 		print(filename)
 
 		while line:
-			json_obj = json.loads(line)
+			if not line:
+				continue
+			json_obj = None
+			try:
+				json_obj = json.loads(line)
+			except:
+				line = zip_file.readline()
+				continue
 			if 'text' not in json_obj:
 				line = zip_file.readline()
 				continue

@@ -9,7 +9,7 @@ import configparser
 import string_utils
 
 config = configparser.ConfigParser()
-config.read(base + '/../Config.cf')
+config.read(base + '/../config/conf.cf')
 
 def get_token(key):
 	return int(float(config['VOCAB INFO'][key]))

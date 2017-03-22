@@ -8,13 +8,13 @@ model_save = ./models/model
 
 [MODEL INFO]
 embedding_size = 64
-state_size = 1280
+state_size = 1024
 gru_depth = 4
-dropout_keep_prob = 0.5
+dropout_keep_prob = 0.9
 
 [TRAIN INFO]
-batch_size = 50
-lambda = 0.2
+batch_size = 75
+lambda = 0
 
 [VOCAB INFO]
 zero_mask = 0
@@ -25,4 +25,4 @@ div_token = 4
 
 [DATA INFO]
 min_cutoffs = 200000
-start_num = 128
+start_num = 452

@@ -69,9 +69,9 @@ def _build_model():
 	#CELL
 	#Build the GRU object. This creates the parameters, computation
 	#graph will be created it later.
-	gru_cell = tf.nn.rnn_cell.GRUCell(model_param('state_size'))
-	gru_cell = tf.nn.rnn_cell.DropoutWrapper(gru_cell, output_keep_prob = float(config['MODEL INFO']['dropout_keep_prob']))
-	gru_cell = tf.nn.rnn_cell.MultiRNNCell([gru_cell] * model_param('gru_depth'))
+	gru_cell = tf.contrib.rnn.LSTMCell(model_param('state_size'))
+	gru_cell = tf.contrib.rnn.DropoutWrapper(gru_cell, output_keep_prob = float(config['MODEL INFO']['dropout_keep_prob']))
+	gru_cell = tf.contrib.rnn.MultiRNNCell([gru_cell] * model_param('gru_depth'))
 
 	#OPERATION
 	#An operation wraps the GRU cell to turn it into an operation for the computational graph
@@ -89,7 +89,7 @@ def _build_model():
 	sequence_output = tfl.fully_connected(gru_output, vocab_size, regularizer = 'L2')	
 
 	#Brings last output of GRU to i/o space and dimensions to allow for evaluation.
-	eval_output = tf.reshape(tf.nn.log_softmax(tf.unstack(sequence_output, axis = 1)[-1]), [int(float(config['TRAIN INFO']['batch_size'])), -1, vocab_size])
+	eval_output = tf.reshape(tf.nn.log_softmax(sequence_output[-1]), [-1, vocab_size])
 	#Gets top k probabilities. 
 	top_k_probs, top_k_inds = tf.nn.top_k(eval_output, k = 10)
 
@@ -105,7 +105,8 @@ def _build_model():
 	
 	#OPERATION 
 	#Generate the loss function.
-	loss = tf.reduce_sum(tf.nn.sparse_softmax_cross_entropy_with_logits(sequence_output, labels_reshaped) * zero_mask) / num_nonzero + float(config['TRAIN INFO']['lambda']) * sum(tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES))
+	loss = tf.reduce_sum(tf.multiply(tf.nn.sparse_softmax_cross_entropy_with_logits(logits = sequence_output, labels = labels_reshaped),  zero_mask)) / num_nonzero
+#float(config['TRAIN INFO']['lambda']) * sum(tf.get_collection(tf.GraphKeys.REGULARIZATION_LOSSES))
 	train_step = tf.train.AdamOptimizer().minimize(loss)
 	return {'train_step': train_step, 
 		'loss': loss, 

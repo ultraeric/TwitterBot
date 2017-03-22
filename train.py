@@ -14,10 +14,10 @@ print(base)
 config.read(base + '/config/conf.cf')
 
 load_model = base + '/' + config['FILE LOCS']['model_load']
-load_model = None
+#load_model = None
 
 #Builds and retrieves model on a GPU
-model = Model.build_model(gpu = True, gpu_num = 1)
+model = Model.build_model(gpu = True, gpu_num = 0)
 train_step = model['train_step']
 
 for key in model:
@@ -27,7 +27,6 @@ for key in model:
 saver = tf.train.Saver()
 configp = tf.ConfigProto(allow_soft_placement = True)
 configp.gpu_options.allocator_type = 'BFC'
-configp.gpu_options.allow_growth = True
 
 tf.logging.set_verbosity(tf.logging.FATAL)
 
@@ -37,21 +36,10 @@ with tf.Session(config = configp) as sess:
 	sess.run(tf.global_variables_initializer())
 
 	if load_model:
-		keys = [key for key in model]
-		model = {}
-		new_saver = tf.train.import_meta_graph(load_model + '.meta', clear_devices = True)
-
-		with tf.device('/gpu:1'):
-			new_saver.restore(sess, tf.train.latest_checkpoint('./'))
-		for key in keys:
-			item = tf.get_collection(key)
-			print(item)
-			if item:
-				print(key)			
-				model[key] = item[0]
+		saver.restore(sess, tf.train.latest_checkpoint('models/'))
 
 	#Gets the batch generator function
-	batch_func = datasets.Batch_Maker.get_batch_func(gpu = True, gpu_num = 1)
+	batch_func = datasets.Batch_Maker.get_batch_func(gpu = True, gpu_num = 0)
 	batch = batch_func()
 	batch_num = 0
 	
@@ -62,10 +50,11 @@ with tf.Session(config = configp) as sess:
 			batch_func()
 			batch_num += 1
 			continue
-		train_step.run(feed_dict = {model['sequence_ids']: batch[0],
+		_, loss = sess.run([train_step, model['loss']],feed_dict = {model['sequence_ids']: batch[0],
 					model['labels']: batch[1]})	
 		batch = batch_func()
 		batch_num += 1
+		print(loss)
 		if batch_num % 5000 == 0:
 			saver.save(sess, base + '/' + config['FILE LOCS']['model_save'])
 	#Save model

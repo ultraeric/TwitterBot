@@ -1,8 +1,8 @@
 import vocab.Vocab_Parser
 import datasets.Cleaner
-import datasets.Preprocessor
 
-vocab.Vocab_Parser.parse_vocab()
+#vocab.Vocab_Parser.parse_vocab()
+import datasets.Preprocessor
 datasets.Cleaner.clean()
 datasets.Preprocessor.process()
 
