@@ -3,7 +3,7 @@ import json
 import os
 import pickle
 
-import utils.Vocab.Vocab as Vocab
+import utils.vocab.Vocab as Vocab
 
 base = os.path.dirname(__file__)
 
