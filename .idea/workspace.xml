@@ -1,33 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="058f994a-3b04-47ea-a2db-33f4724fe12f" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/TwitterBot.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/train_torch.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/utils/Vocab.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.eval.py.swp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.parse_utils.py.swp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/datasets/Batch_Maker.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/datasets/Cleaner.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Model.py" afterPath="$PROJECT_DIR$/Model.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/conf.cf" afterPath="$PROJECT_DIR$/config/conf.cf" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datasets/Preprocessor.py" afterPath="$PROJECT_DIR$/datasets/Preprocessor.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datasets/__init__.py" afterPath="$PROJECT_DIR$/datasets/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eval.py" afterPath="$PROJECT_DIR$/eval.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/preprocess.py" afterPath="$PROJECT_DIR$/preprocess.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scrape.py" afterPath="$PROJECT_DIR$/scrape.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/train.py" afterPath="$PROJECT_DIR$/train.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/__init__.py" afterPath="$PROJECT_DIR$/utils/__init__.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/parse_utils.py" afterPath="$PROJECT_DIR$/utils/parse_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/string_utils.py" afterPath="$PROJECT_DIR$/utils/string_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils/valid_utils.py" afterPath="$PROJECT_DIR$/utils/valid_utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vocab/Vocab_Parser.py" afterPath="$PROJECT_DIR$/vocab/Vocab_Parser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vocab/__init__.py" afterPath="$PROJECT_DIR$/vocab/__init__.py" />
-    </list>
+    <list default="true" id="058f994a-3b04-47ea-a2db-33f4724fe12f" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
