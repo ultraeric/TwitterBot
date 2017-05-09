@@ -3,7 +3,7 @@ import os
 
 base = os.path.dirname(__file__)
 import configparser
-from .Vocab import Vocab
+from .vocab import Vocab
 
 config = configparser.ConfigParser()
 config.read(base + '/../config/conf.cf')
