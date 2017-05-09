@@ -16,6 +16,13 @@ dropout_keep_prob = 0.9
 batch_size = 75
 lambda = 0
 
+[VOCAB INFO]
+zero_mask = 0
+unk_token = 1
+start_token = 2
+end_token = 3
+div_token = 4
+
 [DATA INFO]
 min_cutoffs = 200000
 start_num = 492

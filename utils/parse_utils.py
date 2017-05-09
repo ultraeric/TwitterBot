@@ -3,7 +3,7 @@ import os
 
 base = os.path.dirname(__file__)
 import configparser
-from .vocab import Vocab
+from utils.vocab import Vocab
 
 config = configparser.ConfigParser()
 config.read(base + '/../config/conf.cf')
@@ -16,7 +16,7 @@ def parse_vocab(read_filepaths, write_filepaths, json_to_string_accessors, char=
     to be in JSON format. Extracts the strings to parse from the json according to the json_to_string_accessors.
     By default parses by character.
     
-    :param filepaths: Filepaths to search for files to parse vocab from
+    :param read_filepaths: Filepaths to search for files to parse vocab from
     :param write_filepaths: Filepaths to write vocab to
     :param json_to_string_accessors: Accessors for the strings to parse from the JSONs
     :param char: Whether to parse by character. Default is True

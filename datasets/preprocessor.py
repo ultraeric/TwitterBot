@@ -3,16 +3,12 @@ import json
 import os
 import pickle
 
-import utils.Vocab as Vocab
+from utils import Vocab
 
 base = os.path.dirname(__file__)
 
 config = configparser.ConfigParser()
 config.read(base + '/../config/conf.cf')
-
-# Load vocab from file
-vocab = pickle.load(open(base + '/.' + config['FILE LOCS']['vocab_dir'] + '/vocab.data', 'rb'))
-assert type(vocab) is Vocab, 'Loaded vocab is not Vocab object'
 
 
 def preprocess():
@@ -21,6 +17,10 @@ def preprocess():
     
     :return: None
     """
+    # Load vocab from file
+    vocab = pickle.load(open(base + '/.' + config['FILE LOCS']['vocab_dir'] + '/vocab.data', 'rb'))
+    assert type(vocab) is Vocab, 'Loaded vocab is not Vocab object'
+
     write_file = open(config['FILE LOCS']['preprocessed_dataset'], 'w+')
 
     clean_dataset_dir = base + '/.' + config['FILE LOCS']['clean_dataset_dir']

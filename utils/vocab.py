@@ -4,13 +4,15 @@ import operator
 import os
 import pickle
 
-from . import string_utils
+import utils.string_utils as string_utils
 
 base = os.path.dirname(__file__)
 
 config = configparser.ConfigParser()
 config.read(base + '/../config/conf.cf')
 
+def get_token(key):
+    return int(float(config['VOCAB INFO'][key]))
 
 class Vocab():
     def __init__(self, filepath=None, item_freqs=None, parse_filepath=None, char=False, lower=True,
@@ -174,11 +176,11 @@ class Vocab():
             if sorted_vocab_list[i][1] > self.cutoff:
                 active_vocab[sorted_vocab_list[i][0]] = i + 5
 
-        active_vocab['<Z>'] = 0
-        active_vocab['<UNK>'] = 1
-        active_vocab['<S>'] = 2
-        active_vocab['</S>'] = 3
-        active_vocab['<||>'] = 4
+        active_vocab['<Z>'] = get_token('zero_mask')
+        active_vocab['<UNK>'] = get_token('unk_token')
+        active_vocab['<S>'] = get_token('start_token')
+        active_vocab['</S>'] = get_token('end_token')
+        active_vocab['<||>'] = get_token('div_token')
 
         for item in active_vocab:
             active_interp[active_vocab[item]] = item
