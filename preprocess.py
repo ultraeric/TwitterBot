@@ -2,6 +2,6 @@ import datasets
 import vocab
 
 
-datasets.clean()
+#datasets.clean()
 vocab.parse_vocab()
-datasets.process()
+datasets.preprocess()

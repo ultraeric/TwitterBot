@@ -2,7 +2,7 @@ import configparser
 import json
 import operator
 import os
-import pickle
+import dill as pickle
 
 import utils.string_utils as string_utils
 
@@ -172,7 +172,7 @@ class Vocab():
         # After the first item that is below the cutoff, no more items are added to the keys anymore.
         active_vocab = self.new_vocab if self.finalized else self.vocab
         active_interp = self.new_interp if self.finalized else self.interp
-        for i in range(min(len(sorted_vocab_list, self.top_n))):
+        for i in range(min(len(sorted_vocab_list), self.top_n)):
             if sorted_vocab_list[i][1] > self.cutoff:
                 active_vocab[sorted_vocab_list[i][0]] = i + 5
 
@@ -249,4 +249,5 @@ class Vocab():
         if not filepath:
             filepath = self.filepath
         assert filepath is not None, 'Filepath not specified'
-        pickle.dump(self, open(filepath, 'wb+'))
+        f = open(filepath, 'wb+')
+        pickle.dump(self, f)

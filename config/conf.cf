@@ -2,6 +2,7 @@
 vocab_dir = ./vocab/data
 dirty_dataset_dir = ./datasets/dirty
 clean_dataset_dir = ./datasets/clean
+_clean_dataset_dir = ./datasets/test_clean
 preprocessed_dataset = ./datasets/processed/dataset.data
 model_load = ./models/model
 model_save = ./models/model
