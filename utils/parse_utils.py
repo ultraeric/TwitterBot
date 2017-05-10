@@ -46,7 +46,7 @@ def parse_vocab(read_filepaths, write_filepaths, json_to_string_accessors, char=
     for read_filepath in read_filepaths:
         read_file = open(read_filepath, 'r')
         json_str = read_file.readline()
-        print(read_file)
+        print(read_filepath)
         while json_str:
             json_obj = json.loads(json_str)
             for vocab in vocabs:
