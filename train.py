@@ -7,7 +7,7 @@ import datasets
 import model as Model
 
 base = os.path.dirname(os.path.abspath(__file__))
-start_batch = 0
+start_batch = 50000
 
 # Parse configuration files
 config = configparser.ConfigParser()
@@ -15,7 +15,7 @@ print(base)
 config.read(base + '/config/conf.cf')
 
 load_model = base + '/' + config['FILE LOCS']['model_load']
-# load_model = None
+#load_model = None
 
 # Builds and retrieves model on a GPU
 model = Model.build_model(gpu=True, gpu_num=0)

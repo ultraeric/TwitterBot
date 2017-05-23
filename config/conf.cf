@@ -14,7 +14,7 @@ gru_depth = 4
 dropout_keep_prob = 0.9
 
 [TRAIN INFO]
-batch_size = 75
+batch_size = 160
 lambda = 0
 
 [VOCAB INFO]
@@ -25,5 +25,5 @@ end_token = 3
 div_token = 4
 
 [DATA INFO]
-min_cutoffs = 200000
-start_num = 492
+min_cutoffs = 150000
+start_num = 955

@@ -38,7 +38,7 @@ class Vocab():
         self.top_n = top_n or 1000000000
         self.include_special = include_special
         self.finalized = False
-        self.size = 0
+        self._size = 0
         self.accessor = accessor
 
         if item_freqs:
@@ -158,7 +158,7 @@ class Vocab():
                 items = string_utils.parse_string_to_chars(items, self.lower, self.include_special)
             else:
                 items = string_utils.parse_string_to_words(items, self.lower, self.include_special)
-            return [self.vocab[item] for item in items]
+            return [self.vocab[item] if item in self.vocab else self.vocab['<UNK>'] for item in items]
 
     def finalize(self):
         """
@@ -185,7 +185,7 @@ class Vocab():
         for item in active_vocab:
             active_interp[active_vocab[item]] = item
 
-        self.size = len(self.vocab)
+        self._size = len(self.vocab)
 
         self.finalized = True
         return self
@@ -196,14 +196,14 @@ class Vocab():
         
         :return: Vocab (self) 
         """
-        curr_ind = self.size
+        curr_ind = self._size
         for item in self.new_vocab.keys():
             if item not in self.vocab.keys():
                 self.vocab[item] = curr_ind
                 curr_ind += 1
         for item in self.vocab:
             self.interp[self.vocab[item]] = item
-        self.size = len(self.vocab)
+        self._size = len(self.vocab)
         return self
 
     def force_unsafe_update(self):
@@ -228,7 +228,7 @@ class Vocab():
                      include_special=self.include_special, cutoff=self.cutoff, top_n=self.top_n)
 
     def size(self):
-        return self.size
+        return self._size
 
     def vocab_set(self):
         return self.vocab.keys()

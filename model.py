@@ -46,7 +46,7 @@ def _build_model():
     """Convenience method builds and returns the model when called"""
 
     vocab = pickle.load(open(base + '/' + config['FILE LOCS']['vocab_dir'] + '/vocab.data', 'rb'))
-    vocab_size = len(vocab[0]) + 5
+    vocab_size = vocab.size()
 
     # PARAMETERS
     # Lookup tables for the embeddings of characters
